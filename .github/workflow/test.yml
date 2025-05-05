@@ -12,8 +12,5 @@ jobs:
           echo "Head branch: $GITHUB_HEAD_REF"
           echo "Base branch: $GITHUB_BASE_REF"
       - name: Conditional step for main
-        if: ${{ github.event.pull_request.base.ref == 'main' }}
-        run: echo "This PR targets main branch"
-      - name: Conditional step for others
-        if: ${{ github.event.pull_request.base.ref != 'main' }}
-        run: echo "This PR targets a non-main branch"
+        if: ${{ github.event.pull_request.base.ref == 'test' }}
+        run: echo "This PR targets test branch"
