@@ -7,6 +7,10 @@ jobs:
   check-target:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: testing runs
         run: |
           git diff --name-only "$GITHUB_BASE_REF" "$GITHUB_HEAD_REF"
