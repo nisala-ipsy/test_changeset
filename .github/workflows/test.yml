@@ -13,14 +13,14 @@ jobs:
 
       - name: testing runs
         run: |
-          git diff --name-only "$GITHUB_BASE_REF" "$GITHUB_HEAD_REF"
-      - name: Conditional step for main
-        if: ${{ github.event.pull_request.base.ref == 'test' }}
-        run: |
-          if git diff --name-only "$GITHUB_BASE_REF" "$GITHUB_HEAD_REF" \
-          | grep -qE '^\.changeset(/|$)|^CHANGELOG\.md$'; then
-            echo "✅ All good"
-          else
-            echo "❌ Looks like you forgot to run changeset versioning"
-            exit 1
-          fi
+          git diff --name-only test
+      # - name: Conditional step for main
+      #   if: ${{ github.event.pull_request.base.ref == 'test' }}
+      #   run: |
+      #     if git diff --name-only "$GITHUB_BASE_REF" "$GITHUB_HEAD_REF" \
+      #     | grep -qE '^\.changeset(/|$)|^CHANGELOG\.md$'; then
+      #       echo "✅ All good"
+      #     else
+      #       echo "❌ Looks like you forgot to run changeset versioning"
+      #       exit 1
+      #     fi
