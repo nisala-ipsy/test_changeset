@@ -12,18 +12,16 @@ jobs:
           fetch-depth: 0
 
       - name: testing runs
+        if: ${{ github.event.pull_request.base.ref == 'test' }}
         run: |
           git fetch
-          # git checkout test
-          # git checkout main
-          git diff --name-only test
-      # - name: Conditional step for main
-      #   if: ${{ github.event.pull_request.base.ref == 'test' }}
-      #   run: |
-      #     if git diff --name-only "$GITHUB_BASE_REF" "$GITHUB_HEAD_REF" \
-      #     | grep -qE '^\.changeset(/|$)|^CHANGELOG\.md$'; then
-      #       echo "✅ All good"
-      #     else
-      #       echo "❌ Looks like you forgot to run changeset versioning"
-      #       exit 1
-      #     fi
+          git checkout "$GITHUB_BASE_REF" 
+          git checkout "$GITHUB_HEAD_REF"
+          git diff --name-only "$GITHUB_BASE_REF"
+          if git diff --name-only "$GITHUB_BASE_REF" "$GITHUB_HEAD_REF" \
+          | grep -qE '^\.changeset(/|$)|^CHANGELOG\.md$'; then
+            echo "✅ All good"
+          else
+            echo "❌ Looks like you forgot to run changeset versioning"
+            exit 1
+          fi
