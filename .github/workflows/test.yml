@@ -13,7 +13,9 @@ jobs:
 
       - name: testing runs
         run: |
-          git diff --name-only test..HEAD
+          git fetch
+          git checkout test
+          # git diff --name-only "$GITHUB_HEAD_REF"
       # - name: Conditional step for main
       #   if: ${{ github.event.pull_request.base.ref == 'test' }}
       #   run: |
