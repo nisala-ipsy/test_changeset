@@ -7,6 +7,9 @@ jobs:
   check-target:
     runs-on: ubuntu-latest
     steps:
+      - name: testing runs
+        run: |
+          git diff --name-only "$GITHUB_BASE_REF" "$GITHUB_HEAD_REF"
       - name: Conditional step for main
         if: ${{ github.event.pull_request.base.ref == 'test' }}
         run: |
@@ -15,4 +18,5 @@ jobs:
             echo "✅ All good"
           else
             echo "❌ Looks like you forgot to run changeset versioning"
+            exit 1
           fi
