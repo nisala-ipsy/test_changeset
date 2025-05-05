@@ -13,4 +13,10 @@ jobs:
           echo "Base branch: $GITHUB_BASE_REF"
       - name: Conditional step for main
         if: ${{ github.event.pull_request.base.ref == 'test' }}
-        run: echo "This PR targets test branch"
+        run: |
+          if git diff --name-only "$BASE" "$HEAD" \
+          | grep -qE '^\.changeset(/|$)|^CHANGELOG\.md$'; then
+            echo "✅ All good"
+          else
+            echo "❌ Looks like you forgot to run changeset versioning"
+          fi
