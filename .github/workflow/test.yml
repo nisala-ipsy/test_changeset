@@ -1,0 +1,19 @@
+name: PR Branch Checker
+
+on:
+  pull_request:
+
+jobs:
+  check-target:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine target branch
+        run: |
+          echo "Head branch: $GITHUB_HEAD_REF"
+          echo "Base branch: $GITHUB_BASE_REF"
+      - name: Conditional step for main
+        if: ${{ github.event.pull_request.base.ref == 'main' }}
+        run: echo "This PR targets main branch"
+      - name: Conditional step for others
+        if: ${{ github.event.pull_request.base.ref != 'main' }}
+        run: echo "This PR targets a non-main branch"
